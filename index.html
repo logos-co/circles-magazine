@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Logos | λ E-Magazine</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <div class="container">
+    <h1 style="text-align: center; width: 100%; color: black; font-size: 2.5rem;">
+       λ Magazine
+    </h1>
+    <div class="sprite-wrapper">
+      <div class="book">
+        <!--  Carousel container -->
+        <div class="carousel" style="--slides: 4;" id="carousel">
+          <!--  Bg sprite -->
+          <div class="sprite"></div>
+          
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <script>
+      
+      function populate_carousel() {
+        const carousel = document.getElementById("carousel");
+        const pages = [
+          "empty spread.png", "Spread 01.png", "Spread 02.png",
+          "Spread 03.png", "Spread 04.png", "Spread 05.png",
+          "Spread 06.png", "Spread 07.png", "Spread 08.png",
+          "Spread 09.png", "Spread 10.png", "Spread 11.png",
+          "Spread 12.png", "Spread 13.png", "Spread 14.png",
+          "Spread 15.png"
+        ];
+
+        pages.forEach(page => {
+          const item = document.createElement("div");
+          item.classList.add("carousel-item");
+
+          item.innerHTML = `
+          <div class="carousel-item">
+            <div class="page-container">
+              <div class="page left-page">
+                <div><img src="./left/${page}" style="width:100%"></div>
+              </div>
+              <div class="page right-page">
+                <div><img src="./right/${page}" style="width:100%"></div>
+              </div>
+            </div>
+          </div>
+          `;
+
+          carousel.appendChild(item);
+        });
+      }
+      
+      function get_device_state() {
+        return {
+          is_mobile: /Mobi/i.test(navigator.userAgent),
+          orientation: window.matchMedia("(orientation: portrait)").matches ? "portrait" : "landscape"
+        };
+      }
+
+      device_state = get_device_state();
+      const container = document.querySelector(".container");
+
+      if ((device_state.is_mobile && device_state.orientation == 'landscape') || (!device_state.is_mobile)){
+        populate_carousel();
+      }
+      else{
+        container.style.display = "none";
+        alert("Please flip your device for better experience");
+      }
+        
+      window.matchMedia("(orientation: portrait)").addEventListener("change", (e) => {
+        device_state = get_device_state();
+        const container = document.querySelector(".container");
+
+        if ((device_state.is_mobile && device_state.orientation == 'landscape') || (!device_state.is_mobile)){
+          populate_carousel();
+          container.style.display = "";
+        }
+      });
+    </script>
+
+  </body>
+  
+</html>
